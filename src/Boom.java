@@ -14,6 +14,8 @@ public class Boom extends JButton {
     boolean checked = false;
     boolean flaged = false;
     boolean hasMine = false;
+    boolean questioned = false;
+    boolean checkwin = false;
 
     int currentRow;
     int currentCol;
@@ -34,16 +36,16 @@ public class Boom extends JButton {
 
     public Boom(String img) {
         this.getIcon(img);
-        this.addMouseListener(new myMouseListener());
+        //this.addMouseListener(new myMouseListener());
     }
 
     private static ImageIcon getIcon(String iconName) {
-        String relative_url = "/home/andrewliu/IdeaProjects/MineWepper/Image/";
-        URL url = Boom.class.getResource(relative_url + iconName);
+//        String relative_url = "/home/andrewliu/IdeaProjects/MineWepper/Image/";
+        URL url = Boom.class.getResource(iconName);
         if (url != null) {
             return new ImageIcon(url);
         } else {
-            System.out.println("加载icon失败:" + relative_url + iconName);
+            System.out.println("加载icon失败:" + iconName);
         }
         return null;
     }
@@ -57,10 +59,12 @@ public class Boom extends JButton {
 
 
     //这里就体现出内部类的优越性，可以使用外部类的参数
-    class myMouseListener implements MouseListener {
+   /* class myMouseListener implements MouseListener {
         @Override
         public void mouseClicked(MouseEvent e) {
             int c = e.getButton();
+            *//*int x = e.getX();
+            int y = e.getY();*//*
             if (c == e.BUTTON1) {
                 //right click
                 if(!checked) {
@@ -69,8 +73,15 @@ public class Boom extends JButton {
                     } else {
 
                     }
-                }
 
+                    if(questioned) {
+
+                    } else {
+
+                    }
+
+
+                }
 
                 System.out.println("right click");
             } else if (c == e.BUTTON3) {
@@ -104,7 +115,7 @@ public class Boom extends JButton {
         public void mouseExited(MouseEvent e) {
 
         }
-    }
+    }*/
 
     public boolean getChecked() {
         return checked;
@@ -138,11 +149,6 @@ public class Boom extends JButton {
         return currentCol;
     }
 
-    public int calculateNearbyBooms(Boom b) {
-        this.neighbour.add(b);
-        if(b.hasMine)
-            this.nearbyMines++;
-        return nearbyMines;
-    }
+
 
 }

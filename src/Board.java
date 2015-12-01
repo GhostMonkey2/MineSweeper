@@ -1,9 +1,14 @@
-/**
+/*
+import javax.swing.*;
+
+*
  * Created by andrewliu on 15-11-24.
- */
-/**
+
+
+*
  * Created by andrewliu on 15-11-24.
- */
+
+
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -332,3 +337,4 @@ public class Board extends JPanel {
         }
     }
 }
+*/
