@@ -27,6 +27,7 @@ public class Layout implements MouseListener {
     Boom booms[][];
 
     Timer timer;
+    Timer Counter;
 
 
     int numOfMines = 10;
@@ -59,6 +60,33 @@ public class Layout implements MouseListener {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("HH:MM:ss");
         time.setText(sdf.format(cal.getTime()));
+        time.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                timer.cancel();
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
 
         status = new JPanel(new BorderLayout());
         status.add(statusBar, "West");
@@ -66,6 +94,8 @@ public class Layout implements MouseListener {
 
         timer = new Timer();
         timer.schedule(new RemindTask(), 0, 1000);
+
+        Counter = new Timer();
 
 
         for (int i = 0; i < 9; i++) {
@@ -106,13 +136,26 @@ public class Layout implements MouseListener {
         return current_time;
     }
 
-
     public class CountTime extends TimerTask {
+        int s = 0;
+        int m = 0;
+        int h = 0;
         public void run() {
-
+            String second = Integer.toString(s);
+            String minute = Integer.toString(m);
+            String hour = Integer.toString(h);
+            time.setText("Time: " + hour + ":" + minute + ":" + second);
+            s++;
+            if (s == 60) {
+                m++;
+                s = 0;
+                if(m == 60) {
+                    h++;
+                    m = 0;
+                }
+            }
         }
     }
-
 
     public class RemindTask extends TimerTask {
         public void run() {
@@ -125,6 +168,7 @@ public class Layout implements MouseListener {
     }
 
     public void gameover() {
+        Counter.cancel();
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 if (booms[i][j].hasMine) {
@@ -156,15 +200,15 @@ public class Layout implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
 
-
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 if (e.getSource() == booms[i][j]) {
                     if (isFirstClick) {
                         timer.cancel();
+                        //timer.schedule(new CountTime(), 0, 1000);
+                        Counter.schedule(new CountTime(), 0, 1000);
                     }
                     isFirstClick = false;
-
 
                     if (e.getButton() == e.BUTTON1 && booms[i][j].flaged == false) {
                         if (booms[i][j].hasMine) {
